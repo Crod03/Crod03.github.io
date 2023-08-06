@@ -7,3 +7,33 @@ body {
     height: 100;
     background-color: darkgreen;
 }
+
+.game-container {
+    position: relatrive;
+    width: 640px;
+    height: 480px;
+    border: 1x solid white;
+}
+
+.goalie {
+    position: absolute;
+    width: 15px;
+    height: 100px;
+    background-color: firebrick;
+}
+
+.player {
+    left: 0;
+}
+
+.opposition {
+    right: 0;
+}
+
+.soccer {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+}
