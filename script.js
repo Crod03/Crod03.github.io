@@ -9,4 +9,14 @@ document.addEventListener ('DOMContentLoaded'), () => {
     let playerScore = 0;
     let oppositionScore = 0;
 
+    function update() {
+        //move the ball
+        const soccerRect = soccer.getBoundingClientRect();
+        const soccerX = ballRect.left + ballSpeedX;
+        const ballY =ballRect.top = ballSpeedY;
+
+        // Check if it hits with walls
+        if (ballY <0 || ballY > gameContainer.clientHeight - ballRect.height) {ballSpeedY = -ballSpeedY;
+        }
+    }
 }
