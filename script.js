@@ -30,4 +30,14 @@ document.addEventListener ('DOMContentLoaded'), () => {
     } else if (ballSpeedX + ballRect.width > oppositionRect.left && ballY + ballRect.height > oppositionRect.top && ballY < oppositionRect.bottom) {
         ballSpeedX = -ballSpeedX;
     }
+
+    //Check Scores
+    if (ballX < 0) {
+        oppositionScore++;
+        resetBall();
+    } else if (ballX + ballRect.width > gameContainer.clientWidth) {
+        playerScore++;
+        resetBall();
+    } 
 }
+
