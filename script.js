@@ -19,4 +19,15 @@ document.addEventListener ('DOMContentLoaded'), () => {
         if (ballY <0 || ballY > gameContainer.clientHeight - ballRect.height) {ballSpeedY = -ballSpeedY;
         }
     }
+
+    //Hit Goalies?
+    const playerRect = playerPaddle.getBoundingClientRect();
+    const oppositionRect = oppositionPaddle.getBoundingClientRect();
+
+    if (ballX < playerRect.right && ballY + ballRect.height > playerRect.top && ballY < oppositionRect.bottom) {
+        ballSpeedX = -ballSpeedX;
+
+    } else if (ballSpeedX + ballRect.width > oppositionRect.left && ballY + ballRect.height > oppositionRect.top && ballY < oppositionRect.bottom) {
+        ballSpeedX = -ballSpeedX;
+    }
 }
