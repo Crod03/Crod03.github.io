@@ -39,5 +39,14 @@ document.addEventListener ('DOMContentLoaded'), () => {
         playerScore++;
         resetBall();
     } 
+
+    //positions for paddles 
+    document.addEventListener('keydown' , (event) => {
+        if (event.key === 'w' && playerPaddle.offsetTop > 0) {
+            playerPaddle.style.top = `${playerPaddle.offsetTop - 10}px`;
+        } else if (event.key === 's' && playerPaddle.offsetTop + playerPaddle.offsetHeight < gameContainer.clientHeight) {
+            playerPaddle.style.top = `${playerPaddle.offsetTop + 10}px`;
+        }
+    });
 }
 
