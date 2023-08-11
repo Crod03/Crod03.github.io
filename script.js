@@ -1,7 +1,7 @@
-document.addEventListener ('DOMContentLoaded'), () => {
-    const gameContainer = documennt.querySelector('.game-container');
+document.addEventListener('DOMContentLoaded', () => {
+    const gameContainer = document.querySelector('.game-container');
     const playerPaddle = document.querySelector('.player');
-    const opposition = document.querySelector('opposition');
+    const oppositionPaddle = document.querySelector('.opposition'); // Corrected variable name
     const soccer = document.querySelector('.soccer');
 
     let soccerSpeedX = 5;
@@ -10,70 +10,74 @@ document.addEventListener ('DOMContentLoaded'), () => {
     let oppositionScore = 0;
 
     function update() {
-        //move the ball
+        // Move the ball
         const soccerRect = soccer.getBoundingClientRect();
-        const soccerX = ballRect.left + ballSpeedX;
-        const ballY =ballRect.top = ballSpeedY;
+        const soccerX = soccerRect.left + soccerSpeedX;
+        const soccerY = soccerRect.top + soccerSpeedY;
 
-        // Check if it hits with walls
-        if (ballY <0 || ballY > gameContainer.clientHeight - ballRect.height) {ballSpeedY = -ballSpeedY;
+        // Check if it hits the walls
+        if (soccerY < 0 || soccerY > gameContainer.clientHeight - soccerRect.height) {
+            soccerSpeedY = -soccerSpeedY;
         }
+
+        // Check if it hits paddles
+        const playerRect = playerPaddle.getBoundingClientRect();
+        const oppositionRect = oppositionPaddle.getBoundingClientRect(); // Corrected variable name
+
+        if (soccerX < playerRect.right && soccerY + soccerRect.height > playerRect.top && soccerY < playerRect.bottom) {
+            soccerSpeedX = -soccerSpeedX;
+        } else if (soccerX + soccerRect.width > oppositionRect.left && soccerY + soccerRect.height > oppositionRect.top && soccerY < oppositionRect.bottom) {
+            soccerSpeedX = -soccerSpeedX;
+        }
+
+        // Check scores
+        if (soccerX < 0) {
+            oppositionScore++;
+            resetSoccer();
+        } else if (soccerX + soccerRect.width > gameContainer.clientWidth) {
+            playerScore++;
+            resetSoccer();
+        }
+
+        // Move paddles
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'w' && playerPaddle.offsetTop > 0) {
+                playerPaddle.style.top = `${playerPaddle.offsetTop - 10}px`;
+            } else if (event.key === 's' && playerPaddle.offsetTop + playerPaddle.offsetHeight < gameContainer.clientHeight) {
+                playerPaddle.style.top = `${playerPaddle.offsetTop + 10}px`;
+            }
+        });
+
+        // AI 
+        const oppositionSpeed = 5;
+        if (soccerSpeedX > 0 && soccerX > gameContainer.clientWidth / 2) {
+            if (soccerY + soccerRect.height / 2 > oppositionRect.top + oppositionRect.height / 2) {
+                oppositionPaddle.style.top = `${oppositionRect.top + oppositionSpeed}px`;
+            } else {
+                oppositionPaddle.style.top = `${oppositionRect.top - oppositionSpeed}px`;
+            }
+        }
+
+        // Update scores
+        document.querySelector('.player-score').textContent = playerScore;
+        document.querySelector('.opposition-score').textContent = oppositionScore;
+
+        // Move ball
+        soccer.style.left = `${soccerX}px`;
+        soccer.style.top = `${soccerY}px`;
+
+        // Continue the game loop
+        requestAnimationFrame(update);
     }
 
-    //Hit Goalies?
-    const playerRect = playerPaddle.getBoundingClientRect();
-    const oppositionRect = oppositionPaddle.getBoundingClientRect();
-
-    if (ballX < playerRect.right && ballY + ballRect.height > playerRect.top && ballY < oppositionRect.bottom) {
-        ballSpeedX = -ballSpeedX;
-
-    } else if (ballSpeedX + ballRect.width > oppositionRect.left && ballY + ballRect.height > oppositionRect.top && ballY < oppositionRect.bottom) {
-        ballSpeedX = -ballSpeedX;
+    function resetSoccer() {
+        soccerSpeedX = -soccerSpeedX;
+        soccer.style.left = `${gameContainer.clientWidth / 2 - soccer.clientWidth / 2}px`;
+        soccer.style.top = `${gameContainer.clientHeight / 2 - soccer.clientHeight / 2}px`;
     }
 
-    //Check Scores
-    if (ballX < 0) {
-        oppositionScore++;
-        resetBall();
-    } else if (ballX + ballRect.width > gameContainer.clientWidth) {
-        playerScore++;
-        resetBall();
-    } 
+    // game loop
+    update();
+});
 
-    //positions for paddles 
-    document.addEventListener('keydown' , (event) => {
-        if (event.key === 'w' && playerPaddle.offsetTop > 0) {
-            playerPaddle.style.top = `${playerPaddle.offsetTop - 10}px`;
-        } else if (event.key === 's' && playerPaddle.offsetTop + playerPaddle.offsetHeight < gameContainer.clientHeight) {
-            playerPaddle.style.top = `${playerPaddle.offsetTop + 10}px`;
-        }
-    });
-    //ai
-    const oppositionSpeed = 5;
-    if (ballSpeedX > 0 && ballX > gameContainer.clientWidth / 2) {
-        if (ballY + ballRect.height / 2 > oppositionRect.top + oppositionRect.height / 2) {
-         oppositionPaddle.style.top = `${opponentRect.top + opponentSpeed}px`;   
-        } else {
-            oppositionPaddle.style.top = `${opponentRect.top - opponentSpeed}px`;
-        }
-    }
-    //scores
-    document.querySelector('.player-score').textContent = playerScore;
-    document.querySelector('.opposition-score').textContent = oppositionScore;
-
-    //Move the ball 
-    ball.style.left = `${ballX}px`;
-    ball.style.top = `${ballY}px`;
-
-    //game restart
-    requestAnimationFrame(update);
-}
-
-function resetBall() {
-    ballSpeedX = -ballSpeedX
-    ball.style.left = `${gameContainer.clientWidth / 2 - ball.clientWidth / 2}px`;
-    ball.style.top = `${gameContainer.clientHeight / 2 - ball.clientHeight / 2}px`;
-}
-
-}
 
