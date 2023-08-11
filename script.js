@@ -48,5 +48,14 @@ document.addEventListener ('DOMContentLoaded'), () => {
             playerPaddle.style.top = `${playerPaddle.offsetTop + 10}px`;
         }
     });
+    //ai
+    const oppositionSpeed = 5;
+    if (ballSpeedX > 0 && ballX > gameContainer.clientWidth / 2) {
+        if (ballY + ballRect.height / 2 > oppositionRect.top + oppositionRect.height / 2) {
+         oppositionPaddle.style.top = `${opponentRect.top + opponentSpeed}px`;   
+        } else {
+            oppositionPaddle.style.top = `${opponentRect.top - opponentSpeed}px`;
+        }
+    }
 }
 
