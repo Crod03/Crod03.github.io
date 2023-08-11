@@ -67,7 +67,13 @@ document.addEventListener ('DOMContentLoaded'), () => {
 
     //game restart
     requestAnimationFrame(update);
-    
+}
+
+function resetBall() {
+    ballSpeedX = -ballSpeedX
+    ball.style.left = `${gameContainer.clientWidth / 2 - ball.clientWidth / 2}px`;
+    ball.style.top = `${gameContainer.clientHeight / 2 - ball.clientHeight / 2}px`;
+}
 
 }
 
