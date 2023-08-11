@@ -57,5 +57,17 @@ document.addEventListener ('DOMContentLoaded'), () => {
             oppositionPaddle.style.top = `${opponentRect.top - opponentSpeed}px`;
         }
     }
+    //scores
+    document.querySelector('.player-score').textContent = playerScore;
+    document.querySelector('.opposition-score').textContent = oppositionScore;
+
+    //Move the ball 
+    ball.style.left = `${ballX}px`;
+    ball.style.top = `${ballY}px`;
+
+    //game restart
+    requestAnimationFrame(update);
+    
+
 }
 
