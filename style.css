@@ -4,15 +4,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100;
+    height: 100vh; /* Added 'vh' unit for height */
     background-color: darkgreen;
 }
 
 .game-container {
-    position: relatrive;
+    position: relative; /* Fixed typo 'relatrive' to 'relative' */
     width: 640px;
     height: 480px;
-    border: 1x solid white;
+    border: 1px solid white; /* Fixed typo '1x' to '1px' */
 }
 
 .goalie {
