@@ -22,11 +22,11 @@ body {
     background-color: firebrick;
 }
 
-.player {
+.goalie-player {
     left: 0;
 }
 
-.opposition {
+.goalie-opposition {
     right: 0;
 }
 
@@ -37,4 +37,3 @@ body {
     background-color: white;
     border-radius: 50%;
 }
-
